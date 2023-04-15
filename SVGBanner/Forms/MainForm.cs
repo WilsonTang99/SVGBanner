@@ -18,7 +18,12 @@ namespace SVGBanner
             UpdateMousePositionStatus();
             //UpdateShape();
         }
-
+        
+        
+        /// <summary>
+        /// Mouse Position
+        /// </summary>
+        /// <returns></returns>
         public Point MousePositionRelativeToPicture()
         {
             var pt = pictureBox1.PointToScreen(Point.Empty);
@@ -31,9 +36,5 @@ namespace SVGBanner
             statusLabelMouse.Text = $"X = {pt.X}, Y = {pt.Y}";
         }
 
-        private void statusLabelMouse_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
