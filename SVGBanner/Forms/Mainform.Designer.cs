@@ -35,12 +35,14 @@
             openToolStripMenuItem = new ToolStripMenuItem();
             editToolStripMenuItem = new ToolStripMenuItem();
             viewToolStripMenuItem = new ToolStripMenuItem();
+            showGridsToolStripMenuItem = new ToolStripMenuItem();
             toolsToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             statusLabelMouse = new ToolStripStatusLabel();
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox1 = new PictureBox();
+            checkBox1 = new CheckBox();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -91,9 +93,18 @@
             // 
             // viewToolStripMenuItem
             // 
+            viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { showGridsToolStripMenuItem });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new Size(55, 24);
             viewToolStripMenuItem.Text = "&View";
+            // 
+            // showGridsToolStripMenuItem
+            // 
+            showGridsToolStripMenuItem.Name = "showGridsToolStripMenuItem";
+            showGridsToolStripMenuItem.Size = new Size(224, 26);
+            showGridsToolStripMenuItem.Text = "Show Grids";
+            showGridsToolStripMenuItem.CheckedChanged += showGridsToolStripMenuItem_CheckedChanged;
+            showGridsToolStripMenuItem.Click += showGridsToolStripMenuItem_Click;
             // 
             // toolsToolStripMenuItem
             // 
@@ -126,9 +137,10 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 99F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 92.5F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
             tableLayoutPanel1.Controls.Add(pictureBox1, 0, 0);
+            tableLayoutPanel1.Controls.Add(checkBox1, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 28);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -140,13 +152,26 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.BackColor = SystemColors.ControlLightLight;
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Location = new Point(3, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(786, 382);
+            pictureBox1.Size = new Size(734, 382);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            pictureBox1.Paint += pictureBox1_Paint;
+            pictureBox1.MouseMove += pictureBox1_MouseMove;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(743, 3);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(54, 24);
+            checkBox1.TabIndex = 1;
+            checkBox1.Text = "checkBox1";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // Mainform
             // 
@@ -164,6 +189,7 @@
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -184,5 +210,7 @@
         private TableLayoutPanel tableLayoutPanel1;
         private PictureBox pictureBox1;
         private ToolStripStatusLabel statusLabelMouse;
+        private CheckBox checkBox1;
+        private ToolStripMenuItem showGridsToolStripMenuItem;
     }
 }
