@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
@@ -43,10 +44,20 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             pictureBox1 = new PictureBox();
             checkBox1 = new CheckBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            comboBox1 = new ComboBox();
+            comboBox2 = new ComboBox();
+            label1 = new Label();
+            textBox1 = new TextBox();
+            menuStrip2 = new MenuStrip();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            openFileDialog1 = new OpenFileDialog();
+            contextMenuStrip2 = new ContextMenuStrip(components);
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -101,7 +112,7 @@
             // showGridsToolStripMenuItem
             // 
             showGridsToolStripMenuItem.Name = "showGridsToolStripMenuItem";
-            showGridsToolStripMenuItem.Size = new Size(224, 26);
+            showGridsToolStripMenuItem.Size = new Size(166, 26);
             showGridsToolStripMenuItem.Text = "Show Grids";
             showGridsToolStripMenuItem.CheckedChanged += showGridsToolStripMenuItem_CheckedChanged;
             showGridsToolStripMenuItem.Click += showGridsToolStripMenuItem_Click;
@@ -139,14 +150,17 @@
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 92.5F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
-            tableLayoutPanel1.Controls.Add(pictureBox1, 0, 0);
-            tableLayoutPanel1.Controls.Add(checkBox1, 1, 0);
+            tableLayoutPanel1.Controls.Add(pictureBox1, 0, 1);
+            tableLayoutPanel1.Controls.Add(checkBox1, 1, 1);
+            tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
+            tableLayoutPanel1.Controls.Add(menuStrip2, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 28);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 97.9798F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 2.020202F));
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 89.07254F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 1.83654714F));
             tableLayoutPanel1.Size = new Size(800, 396);
             tableLayoutPanel1.TabIndex = 2;
             // 
@@ -154,9 +168,9 @@
             // 
             pictureBox1.BackColor = SystemColors.ControlLightLight;
             pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Location = new Point(3, 3);
+            pictureBox1.Location = new Point(3, 39);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(734, 382);
+            pictureBox1.Size = new Size(734, 346);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             pictureBox1.Paint += pictureBox1_Paint;
@@ -165,13 +179,83 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(743, 3);
+            checkBox1.Location = new Point(743, 39);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(54, 24);
             checkBox1.TabIndex = 1;
             checkBox1.Text = "checkBox1";
             checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(comboBox1);
+            flowLayoutPanel1.Controls.Add(comboBox2);
+            flowLayoutPanel1.Controls.Add(label1);
+            flowLayoutPanel1.Controls.Add(textBox1);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(3, 3);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(734, 30);
+            flowLayoutPanel1.TabIndex = 2;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(3, 3);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(151, 28);
+            comboBox1.TabIndex = 0;
+            // 
+            // comboBox2
+            // 
+            comboBox2.DropDownWidth = 51;
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Items.AddRange(new object[] { "8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72" });
+            comboBox2.Location = new Point(160, 3);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(51, 28);
+            comboBox2.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.Location = new Point(217, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(77, 28);
+            label1.TabIndex = 2;
+            label1.Text = "Input Text:";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(300, 3);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(125, 27);
+            textBox1.TabIndex = 2;
+            // 
+            // menuStrip2
+            // 
+            menuStrip2.ImageScalingSize = new Size(20, 20);
+            menuStrip2.Location = new Point(740, 0);
+            menuStrip2.Name = "menuStrip2";
+            menuStrip2.Size = new Size(60, 24);
+            menuStrip2.TabIndex = 3;
+            menuStrip2.Text = "menuStrip2";
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // contextMenuStrip2
+            // 
+            contextMenuStrip2.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip2.Name = "contextMenuStrip2";
+            contextMenuStrip2.Size = new Size(61, 4);
             // 
             // Mainform
             // 
@@ -191,6 +275,8 @@
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -212,5 +298,14 @@
         private ToolStripStatusLabel statusLabelMouse;
         private CheckBox checkBox1;
         private ToolStripMenuItem showGridsToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip1;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private ComboBox comboBox1;
+        private MenuStrip menuStrip2;
+        private OpenFileDialog openFileDialog1;
+        private ContextMenuStrip contextMenuStrip2;
+        private ComboBox comboBox2;
+        private Label label1;
+        private TextBox textBox1;
     }
 }

@@ -5,15 +5,43 @@ using System.Diagnostics;
 using Point = System.Drawing.Point;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 namespace SVGBanner
 {
     public partial class Mainform : Form
     {
+        public FileHandlers FileHandlers { get; }
+
         public Mainform()
         {
             InitializeComponent();
+            comboBox1_initialize();
 
+        }
+
+        private void comboBox1_initialize()
+        {
+            this.comboBox1.DropDownWidth = 280;
+            string directory = AppDomain.CurrentDomain.BaseDirectory + "\\fonts\\";
+            string[] textFiles = System.IO.Directory.GetFiles(directory, "*.ttf");
+            foreach (string file in textFiles)
+            {
+                // Remove the directory from the string
+                string filename = file.Substring(file.LastIndexOf(@"\") + 1);
+                // Remove the extension from the filename
+                string name = filename.Substring(0, filename.LastIndexOf(@"."));
+                // Add the name to the combo box
+                this.comboBox1.Items.Add(name);
+            }
+
+            /*            this.comboBox1.Items.AddRange(new object[] {"Item 1",
+                                    "Item 2",
+                                    "Item 3",
+                                    "Item 4",
+                                    "Item 5"});
+            */
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -40,25 +68,19 @@ namespace SVGBanner
             statusLabelMouse.Text = $"X = {pt.X}, Y = {pt.Y}";
         }
 
-
         /// <summary>
         /// Grids
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            pictureBox1.Invalidate();
-        }
+
         private void showGridsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             pictureBox1.Invalidate();
         }
         private void showGridsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (showGridsToolStripMenuItem.Checked)
-                showGridsToolStripMenuItem.Checked = false;
-            else showGridsToolStripMenuItem.Checked = true;
+            showGridsToolStripMenuItem.Checked = !showGridsToolStripMenuItem.Checked;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -88,6 +110,7 @@ namespace SVGBanner
 
 
         }
+
 
     }
 }
