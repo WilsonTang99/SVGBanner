@@ -52,7 +52,6 @@
             menuStrip2 = new MenuStrip();
             contextMenuStrip1 = new ContextMenuStrip(components);
             openFileDialog1 = new OpenFileDialog();
-            contextMenuStrip2 = new ContextMenuStrip(components);
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -205,6 +204,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(151, 28);
             comboBox1.TabIndex = 0;
+            comboBox1.SelectionChangeCommitted += comboBox1_SelectionChangeCommitted;
             // 
             // comboBox2
             // 
@@ -215,6 +215,7 @@
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(51, 28);
             comboBox2.TabIndex = 1;
+            comboBox2.SelectionChangeCommitted += comboBox2_SelectionChangeCommitted;
             // 
             // label1
             // 
@@ -231,6 +232,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(125, 27);
             textBox1.TabIndex = 2;
+            textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnterKeyPress);
             // 
             // menuStrip2
             // 
@@ -250,12 +252,6 @@
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // contextMenuStrip2
-            // 
-            contextMenuStrip2.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip2.Name = "contextMenuStrip2";
-            contextMenuStrip2.Size = new Size(61, 4);
             // 
             // Mainform
             // 
@@ -281,6 +277,17 @@
             PerformLayout();
         }
 
+        private void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
         #endregion
 
         private MenuStrip menuStrip1;
@@ -303,7 +310,6 @@
         private ComboBox comboBox1;
         private MenuStrip menuStrip2;
         private OpenFileDialog openFileDialog1;
-        private ContextMenuStrip contextMenuStrip2;
         private ComboBox comboBox2;
         private Label label1;
         private TextBox textBox1;

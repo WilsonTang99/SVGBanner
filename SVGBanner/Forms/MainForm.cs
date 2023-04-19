@@ -2,11 +2,14 @@ using System.Windows.Forms;
 using Svg;
 using System.Diagnostics;
 
-using Point = System.Drawing.Point;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using Point = System.Drawing.Point;
+using ComboBox = System.Windows.Forms.ComboBox;
+using TextBox = System.Windows.Forms.TextBox;
+
 
 namespace SVGBanner
 {
@@ -14,12 +17,14 @@ namespace SVGBanner
     {
         public FileHandlers FileHandlers { get; }
 
+        public GlyphChar glyphChar { get; }
+
         public Mainform()
         {
             InitializeComponent();
             comboBox1_initialize();
-
         }
+        
 
         private void comboBox1_initialize()
         {
@@ -35,13 +40,30 @@ namespace SVGBanner
                 // Add the name to the combo box
                 this.comboBox1.Items.Add(name);
             }
+        }
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox senderComboBox = (ComboBox)sender;
 
-            /*            this.comboBox1.Items.AddRange(new object[] {"Item 1",
-                                    "Item 2",
-                                    "Item 3",
-                                    "Item 4",
-                                    "Item 5"});
-            */
+            MessageBox.Show((string)comboBox1.SelectedItem);
+        }
+
+        private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox senderComboBox = (ComboBox)sender;
+
+            MessageBox.Show((string)comboBox2.SelectedItem);
+        }
+
+        private void CheckEnterKeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+
+            {
+                MessageBox.Show((string)textBox1.Text);
+                // return (textBox1.Text);
+            }
+
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)

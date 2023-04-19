@@ -7,20 +7,21 @@ using WaterTrans.GlyphLoader;
 
 namespace SVGBanner
 {
-    internal class Glyphs
+    public class GlyphChar : Svg.SvgPath
     {
-        public void ToGlyph()
+        public string SvgXml { get; }
+        public GlyphChar(string str)
         {
-            string fontPath = System.IO.Path.Combine(Environment.CurrentDirectory, "fonts/static/Montserrat-Regular.ttf");
+            string fontPath = System.IO.Path.Combine(Environment.CurrentDirectory, "fonts/Montserrat-Regular.ttf");
             using var fontStream = System.IO.File.OpenRead(fontPath);
             // Initialize stream only
             Typeface tf = new Typeface(fontStream);
 
             var svg = new System.Text.StringBuilder();
-            double unit = 400;
+            double unit = 100;
             double x = 20;
             double y = 20;
-            string text = "ABCD";
+            string text = str;
             svg.AppendLine("<svg width='440' height='140' viewBox='0 0 440 140' xmlns='http://www.w3.org/2000/svg' version='1.1'>");
 
             foreach (char c in text)
@@ -48,7 +49,9 @@ namespace SVGBanner
             }
 
             svg.AppendLine("</svg>");
-            Console.WriteLine(svg.ToString());
+
+            SvgXml = svg.ToString();
+            //Console.WriteLine(SvgXml);
         }
     }
 }
