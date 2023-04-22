@@ -42,20 +42,21 @@
             statusStrip1 = new StatusStrip();
             statusLabelMouse = new ToolStripStatusLabel();
             tableLayoutPanel1 = new TableLayoutPanel();
-            pictureBox1 = new PictureBox();
-            checkBox1 = new CheckBox();
+            svgImage = new PictureBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             comboBox1 = new ComboBox();
             comboBox2 = new ComboBox();
             label1 = new Label();
             textBox1 = new TextBox();
+            button1 = new Button();
+            button2 = new Button();
             menuStrip2 = new MenuStrip();
             contextMenuStrip1 = new ContextMenuStrip(components);
             openFileDialog1 = new OpenFileDialog();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)svgImage).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -147,43 +148,33 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 92.5F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
-            tableLayoutPanel1.Controls.Add(pictureBox1, 0, 1);
-            tableLayoutPanel1.Controls.Add(checkBox1, 1, 1);
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 86.84142F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.1585741F));
+            tableLayoutPanel1.Controls.Add(svgImage, 0, 1);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
             tableLayoutPanel1.Controls.Add(menuStrip2, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 28);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.090909F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 89.07254F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 1.83654714F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 11.3845444F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 86.77553F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 1.83992624F));
             tableLayoutPanel1.Size = new Size(800, 396);
             tableLayoutPanel1.TabIndex = 2;
             // 
-            // pictureBox1
+            // svgImage
             // 
-            pictureBox1.BackColor = SystemColors.ControlLightLight;
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Location = new Point(3, 39);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(734, 346);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            pictureBox1.Paint += pictureBox1_Paint;
-            pictureBox1.MouseMove += pictureBox1_MouseMove;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(743, 39);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(54, 24);
-            checkBox1.TabIndex = 1;
-            checkBox1.Text = "checkBox1";
-            checkBox1.UseVisualStyleBackColor = true;
+            svgImage.BackColor = SystemColors.ControlLightLight;
+            svgImage.Dock = DockStyle.Fill;
+            svgImage.Location = new Point(3, 48);
+            svgImage.Name = "svgImage";
+            svgImage.Size = new Size(688, 337);
+            svgImage.SizeMode = PictureBoxSizeMode.CenterImage;
+            svgImage.TabIndex = 0;
+            svgImage.TabStop = false;
+            svgImage.Paint += pictureBox1_Paint;
+            svgImage.MouseMove += pictureBox1_MouseMove;
             // 
             // flowLayoutPanel1
             // 
@@ -191,10 +182,12 @@
             flowLayoutPanel1.Controls.Add(comboBox2);
             flowLayoutPanel1.Controls.Add(label1);
             flowLayoutPanel1.Controls.Add(textBox1);
+            flowLayoutPanel1.Controls.Add(button1);
+            flowLayoutPanel1.Controls.Add(button2);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(3, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(734, 30);
+            flowLayoutPanel1.Size = new Size(688, 39);
             flowLayoutPanel1.TabIndex = 2;
             // 
             // comboBox1
@@ -232,14 +225,32 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(125, 27);
             textBox1.TabIndex = 2;
-            textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnterKeyPress);
+            textBox1.KeyPress += CheckEnterKeyPress;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(431, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 3;
+            button1.Text = "Enter";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(531, 3);
+            button2.Name = "button2";
+            button2.Size = new Size(94, 29);
+            button2.TabIndex = 4;
+            button2.Text = "Clear";
+            button2.UseVisualStyleBackColor = true;
             // 
             // menuStrip2
             // 
             menuStrip2.ImageScalingSize = new Size(20, 20);
-            menuStrip2.Location = new Point(740, 0);
+            menuStrip2.Location = new Point(694, 0);
             menuStrip2.Name = "menuStrip2";
-            menuStrip2.Size = new Size(60, 24);
+            menuStrip2.Size = new Size(106, 24);
             menuStrip2.TabIndex = 3;
             menuStrip2.Text = "menuStrip2";
             // 
@@ -264,13 +275,14 @@
             MainMenuStrip = menuStrip1;
             Name = "Mainform";
             Text = "Form1";
+            Activated += MainForm_Activated;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)svgImage).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
@@ -303,7 +315,6 @@
         private TableLayoutPanel tableLayoutPanel1;
         private PictureBox pictureBox1;
         private ToolStripStatusLabel statusLabelMouse;
-        private CheckBox checkBox1;
         private ToolStripMenuItem showGridsToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
         private FlowLayoutPanel flowLayoutPanel1;
@@ -313,5 +324,8 @@
         private ComboBox comboBox2;
         private Label label1;
         private TextBox textBox1;
+        private Button button1;
+        private Button button2;
+        private System.Windows.Forms.PictureBox svgImage;
     }
 }

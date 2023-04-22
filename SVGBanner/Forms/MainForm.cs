@@ -9,13 +9,15 @@ using System.IO;
 using Point = System.Drawing.Point;
 using ComboBox = System.Windows.Forms.ComboBox;
 using TextBox = System.Windows.Forms.TextBox;
-
+using SVGBanner.Forms;
+using Svg.FilterEffects;
 
 namespace SVGBanner
 {
     public partial class Mainform : Form
     {
         public FileHandlers FileHandlers { get; }
+        public static SvgDocument? svgDoc { get; set; }
 
         public GlyphChar glyphChar { get; }
 
@@ -23,8 +25,10 @@ namespace SVGBanner
         {
             InitializeComponent();
             comboBox1_initialize();
+            SvgEditorForm svgEditor = new SvgEditorForm();
+            svgEditor.Show();
         }
-        
+
 
         private void comboBox1_initialize()
         {
@@ -61,16 +65,57 @@ namespace SVGBanner
 
             {
                 MessageBox.Show((string)textBox1.Text);
-                // return (textBox1.Text);
             }
 
+        }
+
+        private void MainForm_Activated(object sender, EventArgs e)
+        {
+            try
+            {
+                RenderSvg(svgDoc);
+            }
+            catch
+            {
+            }
+        }
+        /// <summary>
+        /// Code from SVG-net
+        /// </summary>
+        /// <param name="svgDoc"></param>
+        public void RenderSvg(SvgDocument svgDoc)
+        {
+#if NET5_0_OR_GREATER
+            if (OperatingSystem.IsWindows())
+                svgImage.Image?.Dispose();
+#else
+            svgImage.Image?.Dispose();
+#endif
+
+            //using (var render = new DebugRenderer())
+            //    svgDoc.Draw(render);
+            if (svgDoc != null)
+            {
+                svgImage.Image = svgDoc.Draw();
+
+
+                var baseUri = svgDoc.BaseUri;
+                var outputDir = Path.GetDirectoryName(baseUri != null && baseUri.IsFile ? baseUri.LocalPath : Application.ExecutablePath);
+#if NET5_0_OR_GREATER
+                if (OperatingSystem.IsWindows())
+                    svgImage.Image?.Save(Path.Combine(outputDir, "output.png"));
+#else
+            svgImage.Image?.Save(Path.Combine(outputDir, "output.png"));
+#endif
+                svgDoc.Write(Path.Combine(outputDir, "output.svg"));
+
+            }
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             UpdateMousePositionStatus();
 
-            //UpdateShape();
         }
 
 
@@ -80,7 +125,7 @@ namespace SVGBanner
         /// <returns></returns>
         public Point MousePositionRelativeToPicture()
         {
-            var pt = pictureBox1.PointToScreen(Point.Empty);
+            var pt = svgImage.PointToScreen(Point.Empty);
             return new Point(MousePosition.X - pt.X, MousePosition.Y - pt.Y);
         }
 

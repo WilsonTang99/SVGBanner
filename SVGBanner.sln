@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SVGBanner", "SVGBanner\SVGBanner.csproj", "{D33815F3-DF9E-4B0B-BF8E-88699F80086E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SVGBannerTest", "SVGBannerTest\SVGBannerTest.csproj", "{D03D7139-C98A-44ED-B0A7-A3FE510FAAA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SVGBannerTest", "SVGBannerTest\SVGBannerTest.csproj", "{D03D7139-C98A-44ED-B0A7-A3FE510FAAA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
