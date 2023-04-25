@@ -25,32 +25,25 @@ namespace SVGBanner.Forms
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            XDocument temp = XDocument.Parse(Mainform.svgXml);
+
+            TextReader tr = new StringReader(Mainform.svgXml);
+            XElement doc = XElement.Load(tr);
+
+            IEnumerable<XElement> childElements =
+               from el in doc.Elements()
+               select el;
+
+            foreach (XElement el in childElements)
+                Console.WriteLine("Name: " + el.Name);
 
             int dx = 6;
             int dy = 8;
             XAttribute translate = new XAttribute("transform", "translate(30,40)");
             translate.SetValue($"translate({dx},{dy})");
 
-            //XmlNodeList nodeList;
 
-            var root = temp.Root;
-            var nodeList = root.Nodes();
 
-            foreach (XElement node in nodeList)
-            {
-                if (node.Attribute("transform") != null)
-                {
-                    MessageBox.Show(node.Attribute("transform").Value);
-                }
-                else node.Add(translate);
-                
-            }
 
-            var svgDoc = SvgDocument.FromSvg<SvgDocument>(root.ToString());
-            Mainform.svgDoc = svgDoc;
-            //SvgXmlBoxText = nodeList.ToString();
-            //MessageBox.Show(nodeList.ToString());
         }
     }
 }

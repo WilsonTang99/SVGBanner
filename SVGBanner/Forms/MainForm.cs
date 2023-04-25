@@ -15,11 +15,8 @@ using static System.Windows.Forms.DataFormats;
 
 namespace SVGBanner
 {
-    public delegate void PassValueHandler(string strValue);
     public partial class Mainform : Form
     {
-        public event PassValueHandler PassValue;
-
         public FileHandlers? FileHandlers { get; }
 
         public SvgEditorForm svgEditor { get; set; } = new();
@@ -38,15 +35,8 @@ namespace SVGBanner
 
             userControls.Show();
 
-            /*            svgEditor.PassValue += new PassValueHandler(svgEditor_PassValue);*/
             svgEditor.Show();
-
-            mainForm.PassValue += new PassValueHandler(mainForm_PassValue);
         }
-        /*        public void svgEditor_PassValue(string strValue)
-                {
-                    textBox2.Text = strValue;
-                }*/
 
         private void comboBox1_initialize()
         {
@@ -84,30 +74,18 @@ namespace SVGBanner
             {
                 //MessageBox.Show((string)textBox1.Text);
 
-                var temp = new GlyphChars(textBox1.Text, comboBox1.Text);
-
-                var svgDoc = SvgDocument.FromSvg<SvgDocument>(temp.SvgXml);
-                RenderSvg(svgDoc);
-
+                var temp = new GlyphChars(textBox1.Text, comboBox1.Text, textBox1.ForeColor);
                 textBox2.Text = temp.SvgXml.ToString();
 
 
+                var svgDoc = SvgDocument.FromSvg<SvgDocument>(temp.SvgXml);
+                RenderSvg(svgDoc);
+/*
                 svgEditor.ChangeText(temp.SvgXml);
                 svgXml = temp.SvgXml;
-
+*/
             }
 
-        }
-
-        public void MainForm_Activated(object sender, EventArgs e)
-        {
-            try
-            {
-                RenderSvg(svgDoc);
-            }
-            catch
-            {
-            }
         }
 
 
@@ -205,10 +183,7 @@ namespace SVGBanner
                         gr.DrawLine(Pens.Green, 0, y, w, y);
                 }
             }
-
-
         }
-
 
         /// <summary>
         /// dummy code for the hidden textbox
@@ -253,6 +228,21 @@ namespace SVGBanner
             // create empty instance
             var svgDoc = SvgDocument.FromSvg<SvgDocument>("<svg></svg>");
             RenderSvg(svgDoc);
+        }
+
+        private void ColourBtn_Click(object sender, EventArgs e)
+        {
+            ColorDialog MyDialog = new ColorDialog();
+            // Keeps the user from selecting a custom color.
+            MyDialog.AllowFullOpen = false;
+            // Allows the user to get help. (The default is false.)
+            MyDialog.ShowHelp = true;
+            // Sets the initial color select to the current text color.
+            MyDialog.Color = textBox1.ForeColor;
+
+            // Update the text box color if the user clicks OK 
+            if (MyDialog.ShowDialog() == DialogResult.OK)
+                textBox1.ForeColor = MyDialog.Color;
         }
     }
 }

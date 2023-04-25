@@ -11,7 +11,8 @@ namespace SVGBanner
     public class GlyphChars : XDocument
     {
         public string SvgXml { get; }
-        public GlyphChars(string str, string? font)
+
+        public GlyphChars(string str, string? font, Color color)
         {
             var fontpath = !(font.Length == 0)? "fonts/"+font+".ttf" : "fonts/Montserrat-Regular.ttf";
             string fontPath = System.IO.Path.Combine(Environment.CurrentDirectory, fontpath);
@@ -25,7 +26,10 @@ namespace SVGBanner
             double y = 20;
             var id = 0;
             string text = str;
-            svg.AppendLine($"<svg width='{str.Length*65}' height='140' viewBox='0 0 {str.Length * 65} 140' xmlns='http://www.w3.org/2000/svg' version='1.1'>");
+            string hexColor = (ColorTranslator.ToHtml(color) == "windowtext") ? "#000000" : ColorTranslator.ToHtml(color);
+
+            svg.AppendLine($"<svg width='{str.Length*85}' height='200' viewBox='0 0 {str.Length * 85} 200'>");
+                            // xmlns='http://www.w3.org/2000/svg' version='1.1'>");
 
             foreach (char c in text)
             {
@@ -47,7 +51,7 @@ namespace SVGBanner
                 // Convert to path mini-language
                 string miniLanguage = geometry.Figures.ToString(x, y + baseline);
 
-                svg.AppendLine($"<path id='obj{id}' d='{miniLanguage}' fill='#46DBC4' stroke='#46DBC4' stroke-width='0' />");
+                svg.AppendLine($"<path id='obj{id}' d='{miniLanguage}' fill='{hexColor}' stroke='{hexColor}' stroke-width='0' />");
                 svg.AppendLine();
                 x += advanceWidth;
                 id++;
@@ -58,5 +62,30 @@ namespace SVGBanner
             SvgXml = svg.ToString();
             //Console.WriteLine(SvgXml);
         }
+
+        public XElement GlyphCharsToXDoc (GlyphChars glyphChars)
+        {
+            TextReader tr = new StringReader(glyphChars.SvgXml.ToString());
+            XElement doc = XElement.Load(tr);
+
+            return doc;
+        }
+
+        public bool CheckAttribute(string attribute, GlyphChars glyphChars)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GlyphChars AddAttribute(string attribute, GlyphChars glyphChars)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GlyphChars RemoveAttribute(string attribute, GlyphChars glyphChars)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
