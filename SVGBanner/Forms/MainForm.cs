@@ -12,6 +12,9 @@ using TextBox = System.Windows.Forms.TextBox;
 using SVGBanner.Forms;
 using Svg.FilterEffects;
 using static System.Windows.Forms.DataFormats;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace SVGBanner
 {
@@ -20,8 +23,6 @@ namespace SVGBanner
         public FileHandlers? FileHandlers { get; }
 
         public SvgEditorForm svgEditor { get; set; } = new();
-
-        public UserControls userControls { get; set; } = new();
 
         public static SvgDocument? svgDoc { get; set; }
 
@@ -32,8 +33,6 @@ namespace SVGBanner
         {
             InitializeComponent();
             comboBox1_initialize();
-
-            userControls.Show();
 
             svgEditor.Show();
         }
@@ -80,10 +79,10 @@ namespace SVGBanner
 
                 var svgDoc = SvgDocument.FromSvg<SvgDocument>(temp.SvgXml);
                 RenderSvg(svgDoc);
-/*
-                svgEditor.ChangeText(temp.SvgXml);
-                svgXml = temp.SvgXml;
-*/
+                /*
+                                svgEditor.ChangeText(temp.SvgXml);
+                                svgXml = temp.SvgXml;
+                */
             }
 
         }
@@ -110,7 +109,7 @@ namespace SVGBanner
 
 
                 var baseUri = svgDoc.BaseUri;
-                var outputDir = Path.GetDirectoryName(baseUri != null && baseUri.IsFile ? baseUri.LocalPath : Application.ExecutablePath);
+                var outputDir = Path.GetDirectoryName(baseUri != null && baseUri.IsFile ? baseUri.LocalPath : System.Windows.Forms.Application.ExecutablePath);
 #if NET5_0_OR_GREATER
                 if (OperatingSystem.IsWindows())
                     svgImage.Image?.Save(Path.Combine(outputDir, "output.png"));
@@ -243,6 +242,60 @@ namespace SVGBanner
             // Update the text box color if the user clicks OK 
             if (MyDialog.ShowDialog() == DialogResult.OK)
                 textBox1.ForeColor = MyDialog.Color;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TextReader tr = new StringReader(textBox2.Text);
+            XElement doc = XElement.Load(tr);
+
+            IEnumerable<XElement> childElements =
+                from el in doc.Elements()
+                select el;
+
+            foreach (var el in childElements)
+            {
+                el.SetAttributeValue("fill", "#FFFFFF");
+                el.SetAttributeValue("stroke-width", "1");
+
+            }
+
+            textBox2.Text = doc.ToString();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            TextReader tr = new StringReader(textBox2.Text);
+            XElement doc = XElement.Load(tr);
+
+            XElement blur1 = new XElement("defs",
+                            new XElement("filter")
+                );
+
+            XElement el1 = blur1.Descendants().First();
+            el1.Add(new XElement("feGaussianBlur"));
+
+            el1.SetAttributeValue("id", "f1");
+            el1.SetAttributeValue("x", "0");
+            el1.SetAttributeValue("y", "0");
+
+            XElement el2 = el1.Descendants().First();
+
+            el2.SetAttributeValue("in", "SourceGraphic");
+            el2.SetAttributeValue("stdDeviation", "15");
+
+            doc.AddFirst(blur1);
+
+            IEnumerable<XElement> childElements =
+                from el in doc.Elements("path")
+                select el;
+
+            foreach (var el in childElements)
+            {
+                el.SetAttributeValue("filter", "url(#f1)");
+            }
+
+            textBox2.Text = doc.ToString();
         }
     }
 }
