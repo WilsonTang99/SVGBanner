@@ -11,24 +11,42 @@ using ComboBox = System.Windows.Forms.ComboBox;
 using TextBox = System.Windows.Forms.TextBox;
 using SVGBanner.Forms;
 using Svg.FilterEffects;
+using static System.Windows.Forms.DataFormats;
 
 namespace SVGBanner
 {
+    public delegate void PassValueHandler(string strValue);
     public partial class Mainform : Form
     {
-        public FileHandlers FileHandlers { get; }
+        public event PassValueHandler PassValue;
+
+        public FileHandlers? FileHandlers { get; }
+
+        public SvgEditorForm svgEditor { get; set; } = new();
+
+        public UserControls userControls { get; set; } = new();
+
         public static SvgDocument? svgDoc { get; set; }
 
-        public GlyphChar glyphChar { get; }
+        public static string? svgXml { get; set; }
+
 
         public Mainform()
         {
             InitializeComponent();
             comboBox1_initialize();
-            SvgEditorForm svgEditor = new SvgEditorForm();
-            svgEditor.Show();
-        }
 
+            userControls.Show();
+
+            /*            svgEditor.PassValue += new PassValueHandler(svgEditor_PassValue);*/
+            svgEditor.Show();
+
+            mainForm.PassValue += new PassValueHandler(mainForm_PassValue);
+        }
+        /*        public void svgEditor_PassValue(string strValue)
+                {
+                    textBox2.Text = strValue;
+                }*/
 
         private void comboBox1_initialize()
         {
@@ -49,14 +67,14 @@ namespace SVGBanner
         {
             ComboBox senderComboBox = (ComboBox)sender;
 
-            MessageBox.Show((string)comboBox1.SelectedItem);
+            //MessageBox.Show((string)comboBox1.SelectedItem);
         }
 
         private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
         {
             ComboBox senderComboBox = (ComboBox)sender;
 
-            MessageBox.Show((string)comboBox2.SelectedItem);
+            //MessageBox.Show((string)comboBox2.SelectedItem);
         }
 
         private void CheckEnterKeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -64,12 +82,24 @@ namespace SVGBanner
             if (e.KeyChar == (char)Keys.Return)
 
             {
-                MessageBox.Show((string)textBox1.Text);
+                //MessageBox.Show((string)textBox1.Text);
+
+                var temp = new GlyphChars(textBox1.Text, comboBox1.Text);
+
+                var svgDoc = SvgDocument.FromSvg<SvgDocument>(temp.SvgXml);
+                RenderSvg(svgDoc);
+
+                textBox2.Text = temp.SvgXml.ToString();
+
+
+                svgEditor.ChangeText(temp.SvgXml);
+                svgXml = temp.SvgXml;
+
             }
 
         }
 
-        private void MainForm_Activated(object sender, EventArgs e)
+        public void MainForm_Activated(object sender, EventArgs e)
         {
             try
             {
@@ -79,6 +109,8 @@ namespace SVGBanner
             {
             }
         }
+
+
         /// <summary>
         /// Code from SVG-net
         /// </summary>
@@ -112,10 +144,9 @@ namespace SVGBanner
             }
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void svgImage_MouseMove(object sender, MouseEventArgs e)
         {
             UpdateMousePositionStatus();
-
         }
 
 
@@ -143,7 +174,7 @@ namespace SVGBanner
 
         private void showGridsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
-            pictureBox1.Invalidate();
+            svgImage.Invalidate();
         }
         private void showGridsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -155,13 +186,13 @@ namespace SVGBanner
             pictureBox1.Invalidate();
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        private void svgImage_Paint(object sender, PaintEventArgs e)
         {
             if (showGridsToolStripMenuItem.Checked)
             {
                 int x, y;
-                int w = pictureBox1.Size.Width;
-                int h = pictureBox1.Size.Height;
+                int w = svgImage.Size.Width;
+                int h = svgImage.Size.Height;
                 int inc = 50; // trackBar1.Value;
 
                 Graphics gr = e.Graphics;
@@ -179,5 +210,49 @@ namespace SVGBanner
         }
 
 
+        /// <summary>
+        /// dummy code for the hidden textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var svgDoc = SvgDocument.FromSvg<SvgDocument>(textBox2.Text);
+                RenderSvg(svgDoc);
+            }
+            catch
+            {
+            }
+        }
+
+        private void TextBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.Control && e.KeyCode == Keys.A)
+                    (sender as TextBox).SelectAll();
+            }
+            catch
+            {
+            }
+        }
+        /// <summary>
+        /// Implementaion of the clear button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // needs to throw everything to undo stack
+
+            textBox1.Text = string.Empty;
+            textBox2.Text = string.Empty;
+
+            // create empty instance
+            var svgDoc = SvgDocument.FromSvg<SvgDocument>("<svg></svg>");
+            RenderSvg(svgDoc);
+        }
     }
 }

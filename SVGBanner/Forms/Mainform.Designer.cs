@@ -45,12 +45,11 @@
             svgImage = new PictureBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             comboBox1 = new ComboBox();
-            comboBox2 = new ComboBox();
             label1 = new Label();
             textBox1 = new TextBox();
             button1 = new Button();
             button2 = new Button();
-            menuStrip2 = new MenuStrip();
+            textBox2 = new TextBox();
             contextMenuStrip1 = new ContextMenuStrip(components);
             openFileDialog1 = new OpenFileDialog();
             menuStrip1.SuspendLayout();
@@ -148,11 +147,11 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 86.84142F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.1585741F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.Controls.Add(svgImage, 0, 1);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
-            tableLayoutPanel1.Controls.Add(menuStrip2, 1, 0);
+            tableLayoutPanel1.Controls.Add(textBox2, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 28);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -169,17 +168,16 @@
             svgImage.Dock = DockStyle.Fill;
             svgImage.Location = new Point(3, 48);
             svgImage.Name = "svgImage";
-            svgImage.Size = new Size(688, 337);
+            svgImage.Size = new Size(594, 337);
             svgImage.SizeMode = PictureBoxSizeMode.CenterImage;
             svgImage.TabIndex = 0;
             svgImage.TabStop = false;
-            svgImage.Paint += pictureBox1_Paint;
-            svgImage.MouseMove += pictureBox1_MouseMove;
+            svgImage.Paint += svgImage_Paint;
+            svgImage.MouseMove += svgImage_MouseMove;
             // 
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(comboBox1);
-            flowLayoutPanel1.Controls.Add(comboBox2);
             flowLayoutPanel1.Controls.Add(label1);
             flowLayoutPanel1.Controls.Add(textBox1);
             flowLayoutPanel1.Controls.Add(button1);
@@ -187,7 +185,7 @@
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(3, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(688, 39);
+            flowLayoutPanel1.Size = new Size(594, 39);
             flowLayoutPanel1.TabIndex = 2;
             // 
             // comboBox1
@@ -199,20 +197,9 @@
             comboBox1.TabIndex = 0;
             comboBox1.SelectionChangeCommitted += comboBox1_SelectionChangeCommitted;
             // 
-            // comboBox2
-            // 
-            comboBox2.DropDownWidth = 51;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72" });
-            comboBox2.Location = new Point(160, 3);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(51, 28);
-            comboBox2.TabIndex = 1;
-            comboBox2.SelectionChangeCommitted += comboBox2_SelectionChangeCommitted;
-            // 
             // label1
             // 
-            label1.Location = new Point(217, 0);
+            label1.Location = new Point(160, 0);
             label1.Name = "label1";
             label1.Size = new Size(77, 28);
             label1.TabIndex = 2;
@@ -221,7 +208,7 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(300, 3);
+            textBox1.Location = new Point(243, 3);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(125, 27);
             textBox1.TabIndex = 2;
@@ -229,7 +216,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(431, 3);
+            button1.Location = new Point(374, 3);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 3;
@@ -238,21 +225,25 @@
             // 
             // button2
             // 
-            button2.Location = new Point(531, 3);
+            button2.Location = new Point(474, 3);
             button2.Name = "button2";
             button2.Size = new Size(94, 29);
             button2.TabIndex = 4;
             button2.Text = "Clear";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
-            // menuStrip2
+            // textBox2
             // 
-            menuStrip2.ImageScalingSize = new Size(20, 20);
-            menuStrip2.Location = new Point(694, 0);
-            menuStrip2.Name = "menuStrip2";
-            menuStrip2.Size = new Size(106, 24);
-            menuStrip2.TabIndex = 3;
-            menuStrip2.Text = "menuStrip2";
+            textBox2.Dock = DockStyle.Fill;
+            textBox2.Location = new Point(603, 48);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.ScrollBars = ScrollBars.Vertical;
+            textBox2.Size = new Size(194, 337);
+            textBox2.TabIndex = 3;
+            textBox2.TextChanged += TextBox2_TextChanged;
+            textBox2.KeyDown += TextBox2_KeyDown;
             // 
             // contextMenuStrip1
             // 
@@ -289,16 +280,6 @@
             PerformLayout();
         }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
 
         #endregion
 
@@ -319,13 +300,12 @@
         private ContextMenuStrip contextMenuStrip1;
         private FlowLayoutPanel flowLayoutPanel1;
         private ComboBox comboBox1;
-        private MenuStrip menuStrip2;
         private OpenFileDialog openFileDialog1;
-        private ComboBox comboBox2;
         private Label label1;
         private TextBox textBox1;
         private Button button1;
         private Button button2;
         private System.Windows.Forms.PictureBox svgImage;
+        private TextBox textBox2;
     }
 }

@@ -8,24 +8,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Svg;
+using SVGBanner;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using TextBox = System.Windows.Forms.TextBox;
-
 
 namespace SVGBanner.Forms
 {
+/*    public delegate void PassValueHandler(string strValue);*/
+
     public partial class SvgEditorForm : Form
     {
+/*        public event PassValueHandler PassValue;*/
+
+        public string SvgXmlBoxText { get; set; }
+
         public SvgEditorForm()
         {
             InitializeComponent();
+            //userControls.PassValue += new PassValueHandler(userControls_PassValue);
         }
 
-        private void SvgXmlBox_TextChanged(object sender, EventArgs e)
+        public void ChangeText(string text)
         {
+            if (SvgXmlBoxText != null)
+            {
+                SvgXmlBox.Clear();
+                SvgXmlBox.Text = text;
+            }
+        }
+
+        public void SvgXmlBox_TextChanged(object sender, EventArgs e)
+        {
+
             try
             {
-                var svgDoc = SvgDocument.FromSvg<SvgDocument>(SvgXmlBox.Text);
-                Mainform.svgDoc = svgDoc;
+/*                if (PassValue != null)
+                {
+                    PassValue(SvgXmlBox.Text);
+                }*/
             }
             catch
             {
