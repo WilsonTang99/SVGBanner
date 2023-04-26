@@ -10,8 +10,14 @@ namespace SVGBanner
 {
     public class GlyphChars : XDocument
     {
-        public string SvgXml { get; }
+        public string svgXml { get; }
 
+        /// <summary>
+        /// Code from WaterTrans to generate glyphs, with modification on font file paths, colour selection and addition of id tags
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="font"></param>
+        /// <param name="color"></param>
         public GlyphChars(string str, string? font, Color color)
         {
             var fontpath = !(font.Length == 0)? "fonts/"+font+".ttf" : "fonts/Montserrat-Regular.ttf";
@@ -24,7 +30,9 @@ namespace SVGBanner
             double unit = 100;
             double x = 20;
             double y = 20;
+
             var id = 0;
+
             string text = str;
             string hexColor = (ColorTranslator.ToHtml(color) == "windowtext") ? "#000000" : ColorTranslator.ToHtml(color);
 
@@ -54,38 +62,14 @@ namespace SVGBanner
                 svg.AppendLine($"<path id='obj{id}' d='{miniLanguage}' fill='{hexColor}' stroke='{hexColor}' stroke-width='0' />");
                 svg.AppendLine();
                 x += advanceWidth;
+
                 id++;
             }
 
             svg.AppendLine("</svg>");
 
-            SvgXml = svg.ToString();
+            svgXml = svg.ToString();
             //Console.WriteLine(SvgXml);
         }
-
-        public XElement GlyphCharsToXDoc (GlyphChars glyphChars)
-        {
-            TextReader tr = new StringReader(glyphChars.SvgXml.ToString());
-            XElement doc = XElement.Load(tr);
-
-            return doc;
-        }
-
-        public bool CheckAttribute(string attribute, GlyphChars glyphChars)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GlyphChars AddAttribute(string attribute, GlyphChars glyphChars)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GlyphChars RemoveAttribute(string attribute, GlyphChars glyphChars)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

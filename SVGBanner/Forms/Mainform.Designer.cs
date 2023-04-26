@@ -203,6 +203,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(151, 28);
             comboBox1.TabIndex = 0;
+            comboBox1.Text = "Choose a font...";
             // 
             // ColourBtn
             // 
@@ -280,7 +281,7 @@
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 1;
-            button1.Text = "button1";
+            button1.Text = "Fill";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -290,7 +291,7 @@
             button2.Name = "button2";
             button2.Size = new Size(94, 29);
             button2.TabIndex = 2;
-            button2.Text = "button2";
+            button2.Text = "Blur";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click_1;
             // 

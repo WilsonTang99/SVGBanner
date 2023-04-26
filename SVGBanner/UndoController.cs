@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SVGBanner
 {
+    /// <summary>
+    /// Adaption from prof.'s program, in attempt to install undo/redo feature
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class UndoController<T>
     {
         public T Current { get; private set; }

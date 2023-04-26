@@ -23,29 +23,18 @@ namespace SVGBanner
 {
     public partial class Mainform : Form
     {
-        public FileHandlers? FileHandlers { get; }
-
-        public SvgEditorForm svgEditor { get; set; } = new();
-
-        public static SvgDocument? svgDoc { get; set; }
-
-        public static string? svgXml { get; set; }
-
-
         public Mainform()
         {
             InitializeComponent();
             comboBox1_initialize();
             InitializeCheckedListBox();
 
-            // Undo controller initialization 
-/*            UndoController = new UndoController<DocumentModel>(Model);
-            UndoController.UndoStateChanged += UndoControllerOnUndoStateChanged;
-            UpdateUndoRedoMenuStates();*/
-
-            svgEditor.Show();
+            //svgEditor.Show();
         }
 
+        /// <summary>
+        /// Initialization for font selection
+        /// </summary>
         private void comboBox1_initialize()
         {
             this.comboBox1.DropDownWidth = 280;
@@ -61,37 +50,22 @@ namespace SVGBanner
                 this.comboBox1.Items.Add(name);
             }
         }
-        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            ComboBox senderComboBox = (ComboBox)sender;
 
-            //MessageBox.Show((string)comboBox1.SelectedItem);
-        }
-
-        private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            ComboBox senderComboBox = (ComboBox)sender;
-
-            //MessageBox.Show((string)comboBox2.SelectedItem);
-        }
-
+        /// <summary>
+        /// Implementation of UserInput Textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckEnterKeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Return)
 
             {
-                //MessageBox.Show((string)textBox1.Text);
-
                 var temp = new GlyphChars(textBox1.Text, comboBox1.Text, textBox1.ForeColor);
-                textBox2.Text = temp.SvgXml.ToString();
+                textBox2.Text = temp.svgXml.ToString();
 
-
-                var svgDoc = SvgDocument.FromSvg<SvgDocument>(temp.SvgXml);
+                var svgDoc = SvgDocument.FromSvg<SvgDocument>(temp.svgXml);
                 RenderSvg(svgDoc);
-                /*
-                                svgEditor.ChangeText(temp.SvgXml);
-                                svgXml = temp.SvgXml;
-                */
             }
 
         }
@@ -130,16 +104,15 @@ namespace SVGBanner
             }
         }
 
+        /// <summary>
+        /// Mouse Position
+        /// </summary>
+        /// <returns></returns>
         private void svgImage_MouseMove(object sender, MouseEventArgs e)
         {
             UpdateMousePositionStatus();
         }
 
-
-        /// <summary>
-        /// Mouse Position
-        /// </summary>
-        /// <returns></returns>
         public Point MousePositionRelativeToPicture()
         {
             var pt = svgImage.PointToScreen(Point.Empty);
@@ -162,14 +135,10 @@ namespace SVGBanner
         {
             svgImage.Invalidate();
         }
+
         private void showGridsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showGridsToolStripMenuItem.Checked = !showGridsToolStripMenuItem.Checked;
-        }
-
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            pictureBox1.Invalidate();
         }
 
         private void svgImage_Paint(object sender, PaintEventArgs e)
@@ -222,6 +191,7 @@ namespace SVGBanner
             {
             }
         }
+
         /// <summary>
         /// Implementaion of the clear button
         /// </summary>
@@ -239,6 +209,11 @@ namespace SVGBanner
             RenderSvg(svgDoc);
         }
 
+        /// <summary>
+        /// Implementation of Colour button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ColourBtn_Click(object sender, EventArgs e)
         {
             ColorDialog MyDialog = new ColorDialog();
@@ -254,6 +229,11 @@ namespace SVGBanner
                 textBox1.ForeColor = MyDialog.Color;
         }
 
+        /// <summary>
+        /// Implementation of Fill button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             TextReader tr = new StringReader(textBox2.Text);
@@ -273,6 +253,11 @@ namespace SVGBanner
             textBox2.Text = doc.ToString();
         }
 
+        /// <summary>
+        /// Implementation of Blur button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click_1(object sender, EventArgs e)
         {
             TextReader tr = new StringReader(textBox2.Text);
@@ -308,7 +293,10 @@ namespace SVGBanner
             textBox2.Text = doc.ToString();
         }
 
-                private void InitializeCheckedListBox()
+        /// <summary>
+        /// Failed attempt to update checked box for path selection
+        /// </summary>
+        private void InitializeCheckedListBox()
         {
             this.CheckedListBox1 = new CheckedListBox();
             this.CheckedListBox1.Location = new System.Drawing.Point(40, 90);
