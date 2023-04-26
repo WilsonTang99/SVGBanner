@@ -51,7 +51,7 @@
             ClearBtn = new Button();
             textBox2 = new TextBox();
             flowLayoutPanel2 = new FlowLayoutPanel();
-            checkedListBox1 = new CheckedListBox();
+            CheckedListBox1 = new CheckedListBox();
             button1 = new Button();
             button2 = new Button();
             contextMenuStrip1 = new ContextMenuStrip(components);
@@ -120,6 +120,8 @@
             showGridsToolStripMenuItem.Name = "showGridsToolStripMenuItem";
             showGridsToolStripMenuItem.Size = new Size(166, 26);
             showGridsToolStripMenuItem.Text = "Show Grids";
+            showGridsToolStripMenuItem.CheckStateChanged += showGridsToolStripMenuItem_CheckedChanged;
+            showGridsToolStripMenuItem.Click += showGridsToolStripMenuItem_Click;
             // 
             // toolsToolStripMenuItem
             // 
@@ -178,6 +180,7 @@
             svgImage.SizeMode = PictureBoxSizeMode.CenterImage;
             svgImage.TabIndex = 0;
             svgImage.TabStop = false;
+            svgImage.Paint += svgImage_Paint;
             svgImage.MouseMove += svgImage_MouseMove;
             // 
             // flowLayoutPanel1
@@ -253,7 +256,7 @@
             // 
             // flowLayoutPanel2
             // 
-            flowLayoutPanel2.Controls.Add(checkedListBox1);
+            flowLayoutPanel2.Controls.Add(CheckedListBox1);
             flowLayoutPanel2.Controls.Add(button1);
             flowLayoutPanel2.Controls.Add(button2);
             flowLayoutPanel2.Dock = DockStyle.Fill;
@@ -262,13 +265,14 @@
             flowLayoutPanel2.Size = new Size(594, 35);
             flowLayoutPanel2.TabIndex = 4;
             // 
-            // checkedListBox1
+            // CheckedListBox1
             // 
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(3, 3);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(150, 114);
-            checkedListBox1.TabIndex = 0;
+            CheckedListBox1.AllowDrop = true;
+            CheckedListBox1.FormattingEnabled = true;
+            CheckedListBox1.Location = new Point(3, 3);
+            CheckedListBox1.Name = "CheckedListBox1";
+            CheckedListBox1.Size = new Size(150, 114);
+            CheckedListBox1.TabIndex = 0;
             // 
             // button1
             // 
@@ -354,7 +358,7 @@
         private Button ColourBtn;
         private ColorDialog colorDialog1;
         private FlowLayoutPanel flowLayoutPanel2;
-        private CheckedListBox checkedListBox1;
+        private CheckedListBox CheckedListBox1;
         private Button button1;
         private Button button2;
     }

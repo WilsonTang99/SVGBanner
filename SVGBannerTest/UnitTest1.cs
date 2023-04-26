@@ -9,9 +9,9 @@ using System.Xml.XPath;
 
 namespace SVGBannerTest
 {
-    public class Tests
+    public static class GlyphTest
     {
-        private XElement GlyphCharsToXDoc(GlyphChars glyphChars)
+        public static XElement GlyphCharsToXDoc(GlyphChars glyphChars)
         {
             TextReader tr = new StringReader(glyphChars.SvgXml.ToString());
             XElement doc = XElement.Load(tr);
@@ -19,33 +19,33 @@ namespace SVGBannerTest
             return doc;
 
         }
-        private bool CheckAttribute(XElement doc, XAttribute attribute)
+        public static bool CheckAttribute(XElement doc, XAttribute attribute)
         {
             throw new NotImplementedException();
         }
 
+    }
+    public class Tests
+    {
+        GlyphChars testXml = new GlyphChars("AbCd", "Montserrat-Regular", Color.FromName("Black"));
 
         [Test]
         public void TestGlyphChars()
         {
-            var test = new GlyphChars("AbCd", "Montserrat-Regular", Color.FromName("Black"));
-            Console.WriteLine(test.SvgXml);
+
+            Console.WriteLine(testXml.SvgXml);
         }
 
         [Test]
         public void TestGlyphCharsToXDoc()
         {
-            var test = new GlyphChars("AbCd", "Montserrat-Regular", Color.FromName("Black"));
-
-            Console.WriteLine( GlyphCharsToXDoc(test));
+             Console.WriteLine(GlyphTest.GlyphCharsToXDoc(testXml));
         }
 
         [Test]
         public void TestAddAttribute()
         {
-            var test = new GlyphChars("AbCd", "Montserrat-Regular", Color.FromName("Black"));
-
-            XElement doc = GlyphCharsToXDoc(test);
+            XElement doc = GlyphTest.GlyphCharsToXDoc(testXml);
 
             XElement xpath = doc.Element("path");
 
@@ -83,29 +83,7 @@ namespace SVGBannerTest
         [Test] 
         public void TestRemoveAttribute()
         {
-            var test = new GlyphChars("AbCd", "Montserrat-Regular", Color.FromName("Black"));
-
-            XElement doc = GlyphCharsToXDoc(test);
-
-            XElement xpath = doc.Element("path");
-
-            XElement blur1 = new XElement("defs",
-                            new XElement("filter")
-                );
-
-            XElement el1 = blur1.Descendants().First();
-            el1.Add(new XElement("feGaussianBlur"));
-
-            el1.SetAttributeValue("id", "f1");
-            el1.SetAttributeValue("x", "0");
-            el1.SetAttributeValue("y", "0");
-
-            XElement el2 = el1.Descendants().First();
-
-            el2.SetAttributeValue("in", "SourceGraphic");
-            el2.SetAttributeValue("stdDeviation", "15");
-
-            doc.AddFirst(blur1);
+            XElement doc = GlyphTest.GlyphCharsToXDoc(testXml);
 
             IEnumerable<XElement> childElements =
                     from el in doc.Elements("path")
@@ -133,12 +111,7 @@ namespace SVGBannerTest
         [Test]
         public void TestCheckAttribute()
         {
-            var test = new GlyphChars("AbCd", "Montserrat-Regular", Color.FromName("Black"));
-
-            XElement doc = GlyphCharsToXDoc(test);
-
-            XElement xpath = doc.Element("path");
-
+            XElement doc = GlyphTest.GlyphCharsToXDoc(testXml);
 
             IEnumerable<XElement> childElements =
                 from el in doc.Elements()
